@@ -109,6 +109,17 @@ public:
         int max_threads = std::thread::hardware_concurrency());
 
     bool intersect(Ray ray, Hit * hit_ptr) const;
+
+    /* Read-only access to the tree's internal flat arrays, added to allow
+     * exporting the already SAH-built, array-indexed tree to a GPU buffer
+     * without rebuilding it there. Node/Tri are private nested types, but
+     * their members are public (default for `struct`), so callers can use
+     * `auto` to hold elements and access fields (e.g. `node.first`,
+     * `node.left`, `tri.a`) without needing to name the types. */
+    static constexpr IdxType nai() { return NAI; }
+    std::vector<Node> const & get_nodes() const { return nodes; }
+    std::vector<Tri> const & get_tris() const { return tris; }
+    std::vector<IdxType> const & get_indices() const { return indices; }
 };
 
 template <typename IdxType, typename Vec3fType>
