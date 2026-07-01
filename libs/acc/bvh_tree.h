@@ -15,6 +15,7 @@
 #include <cassert>
 #include <algorithm>
 #include <atomic>
+#include <memory>
 #include <thread>
 #include <limits>
 
